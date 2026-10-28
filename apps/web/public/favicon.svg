@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="成长档案">
+  <rect width="32" height="32" rx="7" fill="#9a5b3f" />
+  <g transform="translate(16 16) scale(1.3) translate(-16 -16)">
+    <path d="M24.6 7.9c0 9-5.1 14.2-12.3 14.2H9c0-9 5.1-14.2 12.3-14.2h3.3Z" fill="#faf7f2" />
+    <path
+      d="M8.2 26.1c1.2-3.4 2.8-5.9 5-7.8"
+      fill="none"
+      stroke="#faf7f2"
+      stroke-width="2.4"
+      stroke-linecap="round"
+    />
+  </g>
+</svg>

@@ -33,6 +33,7 @@ npm start            # http://127.0.0.1:3000
 | `npm run backup`      | 把 `data/` 打包到 `backups/growth-backup-<时间>.zip` |
 | `npm run db:generate` | 改了 schema 后用 drizzle-kit 生成迁移                  |
 | `npm run media:rehome -- --dry` | 预演把老照片搬进可读目录（去掉 `--dry` 真搬，建议先停服务） |
+| `npm run icons`      | 由 `apps/web/public/favicon.svg` 重新生成 favicon.ico 与 apple-touch-icon |
 
 ---
 
@@ -89,7 +90,8 @@ growth_story/
 │  ├─ drizzle/*.sql          # 迁移文件（只能新增，不能改历史）
 │  └─ data/                  # sqlite + uploads（gitignore，备份只需备份这里）
 ├─ apps/web/                 # Vite + React + Tailwind v4
-│  └─ src/{routes,components,lib,i18n}
+│  ├─ src/{routes,components,lib,i18n}
+│  └─ public/                # favicon.svg / favicon.ico / apple-touch-icon.png
 ├─ scripts/backup.mjs、rehome-media.ts
 ├─ Dockerfile / docker-compose.yml
 └─ .env.example

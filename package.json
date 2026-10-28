@@ -21,7 +21,8 @@
     "db:generate": "npm -w @growth/server run db:generate",
     "backup": "node scripts/backup.mjs",
     "dev:seed": "npm -w @growth/server run seed",
-    "media:rehome": "tsx scripts/rehome-media.ts"
+    "media:rehome": "tsx scripts/rehome-media.ts",
+    "icons": "node scripts/make-icons.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
