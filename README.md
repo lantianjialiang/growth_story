@@ -58,6 +58,8 @@ npm start            # http://127.0.0.1:3000
 
 **时间轴**：按年份分组、年份/类型/标签筛选、显示当时年龄、游标分页 + 滚动加载、无照片事件同样是一等公民。
 
+筛选器是**联动**的：年份/类型/标签后面的数字都由服务端按「其它条件保持不变、只排除自己」重新算（`GET /profiles/:id/facets`）。所以选了 2026 年之后，标签下拉里只会剩下这一年在用的标签、数字也随之变小；选了标签之后，年份下拉里只列出这个标签出现过的年份。当前选中的年份或标签即使被筛成 0 也会留在列表里（显示 `· 0`），不会让下拉框看起来空掉。分页文案（「已经到底了」）用的是筛选后的记录数 `filteredTotal`，不是档案总数。
+
 **画廊**（`/p/:id/gallery`）：与时间轴同一套数据与筛选，一件展品 = 一条记录。默认「只看有照片」，切到「全部记录」时纯文字记录也作为展品出现。
 
 - 桌面端是**左图右展签**两栏：左边舞台放照片，右边一列是日期、年龄、类型、标题、正文、地点、标签、完整记录入口和「第 N / M 件」。文字不再堆在图片下面，一条记录的信息一屏能看完。
@@ -187,6 +189,7 @@ GET    /profiles/:id                PATCH /profiles/:id      DELETE /profiles/:i
 POST   /profiles/:id/restore        DELETE /profiles/:id/permanent（彻底删除）
 
 GET    /profiles/:id/events?year=&type=&tag=&cursor=&limit=
+GET    /profiles/:id/facets?year=&type=&tag=   筛选计数（年份/标签）
 POST   /profiles/:id/events
 GET    /profiles/:id/tags?all=true    POST /profiles/:id/tags
 PATCH  /profiles/:id/tags/:tagId      DELETE /profiles/:id/tags/:tagId
@@ -205,6 +208,7 @@ GET    /profiles/:id/member-candidates  可添加的账号（排除所有者/自
 GET/POST /profiles/:id/share-links  DELETE /profiles/:id/share-links/:linkId[?purge=true]
 
 GET    /public/:token               GET /public/:token/events/:eventId
+GET    /public/:token/facets?year=&type=&tag=  公开链接的筛选计数（只算 inherit）
 GET    /public/:token/media/:id/file?size=
 
 POST   /profiles/:id/export         GET /exports/:id         GET /exports/:id/download
@@ -260,6 +264,7 @@ npm test
 - `apps/server/src/__tests__/profileTrash.test.ts`：档案回收站列表、恢复、彻底删除级联、跨用户隔离、未登录拦截（4 例）
 - `apps/server/src/__tests__/taxonomy.test.ts`：纪念日保存/替换/清空、自定义类型增改删并同步记录、未创建类型被拒、内置重复冲突、按自定义类型筛选、标签增改删、分享链接彻底删除（7 例）
 - `apps/server/src/__tests__/adminUsers.test.ts`：首个账号即管理员、非管理员 403、新建账号并登录、改昵称与角色 / 保留最后一个管理员、重置密码后旧密码与旧会话失效、停用与恢复 / 不能停用自己或有档案的账号、彻底删除只能删已停用的账号（8 例）
+- `apps/server/src/__tests__/facets.test.ts`：标签计数跟着年份变、年份计数跟着标签变、类型叠加后的交集、筛不到的标签记 0、筛选后记录数 filteredTotal 与档案总数分离、非成员 404、公开链接只算继承可见的记录（7 例）
 - `apps/server/src/__tests__/fileStream.test.ts`：文件流完整读取、提前取消、重复取消幂等、文件缺失（4 例）
 
 测试用内存 SQLite + 临时上传目录，互不影响。

@@ -45,11 +45,11 @@ export function TimelinePage() {
       .filter((item) => item.eventCount > 0 || item.year === year);
   }, [allYears, facets.data, year]);
 
-  /** 标签下拉：计数同样跟着年份/类型筛选走，0 条的标签留在列表里但排到最后。 */
-  const tagOptions = useMemo(
-    () => facets.data?.tags ?? tagsQuery.data?.items ?? [],
-    [facets.data, tagsQuery.data],
-  );
+  /** 标签下拉：计数同样跟着年份/类型筛选走；当前筛不到结果时只留已选中的那个，免得选项忽隐忽现。 */
+  const tagOptions = useMemo(() => {
+    const items = facets.data?.tags ?? tagsQuery.data?.items ?? [];
+    return items.filter((item) => item.count > 0 || item.name === tag);
+  }, [facets.data, tagsQuery.data, tag]);
   const events = useMemo(
     () => timeline.data?.pages.flatMap((page) => page.items) ?? [],
     [timeline.data],

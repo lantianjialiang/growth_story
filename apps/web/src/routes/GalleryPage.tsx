@@ -70,10 +70,10 @@ export function GalleryPage() {
       .map((item) => ({ ...item, eventCount: counts.get(item.year) ?? 0 }))
       .filter((item) => item.eventCount > 0 || item.year === year);
   }, [allYears, facets.data, year]);
-  const tagOptions = useMemo(
-    () => facets.data?.tags ?? tagsQuery.data?.items ?? [],
-    [facets.data, tagsQuery.data],
-  );
+  const tagOptions = useMemo(() => {
+    const items = facets.data?.tags ?? tagsQuery.data?.items ?? [];
+    return items.filter((item) => item.count > 0 || item.name === tag);
+  }, [facets.data, tagsQuery.data, tag]);
   const total = timeline.data?.pages[0]?.filteredTotal ?? 0;
 
   const [index, setIndex] = useState(0);
