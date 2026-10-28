@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.local
+apps/server/data/
+apps/server/data-*/
+backups/
+tmp-test/
+*.log
+.DS_Store
+coverage/
+test-results/
+playwright-report/
+shots/

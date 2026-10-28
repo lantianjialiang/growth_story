@@ -1,0 +1,16 @@
+services:
+  growth-archive:
+    build: .
+    container_name: growth-archive
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:3000:3000'
+    environment:
+      NODE_ENV: production
+      DATA_DIR: /data
+      ALLOW_REGISTRATION: '1'
+      TRASH_RETENTION_DAYS: '30'
+      # 对外域名（走 Caddy/Nginx 反代时填写，用于 Origin 校验）
+      # PUBLIC_ORIGIN: https://growth.example.com
+    volumes:
+      - ./data:/data

@@ -1,0 +1,33 @@
+{
+  "name": "growth-archive",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "以时间轴为主线的个人 / 孩子 / 宠物成长档案",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm -w @growth/shared run build && concurrently -n server,web -c cyan,magenta \"npm:dev:server\" \"npm:dev:web\" \"npm:dev:shared\"",
+    "dev:server": "npm -w @growth/server run dev",
+    "dev:web": "npm -w @growth/web run dev",
+    "dev:shared": "npm -w @growth/shared run dev",
+    "build": "npm -w @growth/shared run build && npm -w @growth/web run build && npm -w @growth/server run build",
+    "typecheck": "npm -w @growth/shared run typecheck && npm -w @growth/server run typecheck && npm -w @growth/web run typecheck",
+    "test": "npm -w @growth/shared run test && npm -w @growth/server run test && npm -w @growth/web run typecheck",
+    "seed": "npm -w @growth/server run seed",
+    "start": "node apps/server/dist/index.js",
+    "db:generate": "npm -w @growth/server run db:generate",
+    "backup": "node scripts/backup.mjs",
+    "dev:seed": "npm -w @growth/server run seed",
+    "media:rehome": "tsx scripts/rehome-media.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.4.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
